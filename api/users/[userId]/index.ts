@@ -1,12 +1,9 @@
 // https://vercel.com/docs/runtimes#official-runtimes/node-js/using-type-script-with-the-node-js-runtime
 import type {VercelRequest, VercelResponse} from '@vercel/node'
-
-export const users = [
-  {id: 1, name: 'Qodesmith'},
-  {id: 2, name: 'Wolverine'},
-  {id: 3, name: 'Link'},
-]
+import {users} from '../index'
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
-  res.json({users})
+  const {userId} = req.query
+  const user = users.find(({id}) => id === +userId) ?? null
+  res.json({user})
 }
